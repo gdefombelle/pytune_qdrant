@@ -1,24 +1,38 @@
 [tool.poetry]
-name = "pytune_qdrant"
+name = "pytune-qdrant"   # nom distrib (kebab-case, cohérent avec les autres)
 version = "0.1.0"
 description = "Qdrant integration for PyTune and EigenAgentUX (semantic memory)"
-authors = ["Gabriel <gabriel.de.fombelle@gmail.com>"]
+authors = ["Gabriel de Fombelle <gabriel.de.fombelle@gmail.com>"]
 license = "MIT"
+readme = "README.md"
 packages = [{ include = "pytune_qdrant" }]
 
 [tool.poetry.dependencies]
-python = "^3.12.3"
-qdrant-client = "^1.6.0"
+python = ">=3.12,<3.13"
 
-# -- PROD --
-# simple_logger = { git = "https://github.com/gdefombelle/simple_logger.git" }
-# pytune_configuration = { git = "https://github.com/gdefombelle/pytune_configuration.git"}
+# Vector DB
+qdrant-client = "^1.14.2"   # prends une version récente/stable
 
+# Embeddings
+sentence-transformers = "^3.1.0"   # version plus à jour que 4.1.0
 
-# -- DEV --
-simple_logger = { path = "../../packages/simple_logger" }
-pytune_configuration = { path = "../../packages/pytune_configuration"}
+# --- Dépendances internes ---
+# DEV (local)
+simple-logger        = { path = "../../packages/simple_logger",        develop = true }
+pytune-configuration = { path = "../../packages/pytune_configuration", develop = true }
+
+# PROD (basculé via switch_env.py)
+# simple-logger        = { git = "https://github.com/gdefombelle/simple_logger.git", tag = "v2.0.1" }
+# pytune-configuration = { git = "https://github.com/gdefombelle/pytune_configuration.git", tag = "v1.2.0" }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.0"
+pytest-asyncio = "^0.23.8"
+ruff = "^0.6.8"
+mypy = "^1.11.1"
+black = "^24.8.0"
+isort = "^5.13.2"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.9.0"]
 build-backend = "poetry.core.masonry.api"
